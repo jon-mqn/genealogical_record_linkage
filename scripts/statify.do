@@ -1,9 +1,9 @@
-*code to bring in the 1910 census data
+*code to bring in the census data
 *written by Jon McEwan
 
 clear
 set more off, perm
-cd R:\JoePriceResearch\record_linking\data\census_1910\done
+cd /path/to/processed/files
 
 local i = 1
 local textfiles: dir . files "*_processed.txt"
