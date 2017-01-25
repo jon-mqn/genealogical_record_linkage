@@ -1,7 +1,7 @@
 *merge together some true pairs
 
 *prep  make two pairs datasets
-cd R:\JoePriceResearch\record_linking\projects\deep_learning
+cd path/to/arkpairs
 use ark_pairs, clear
 rename ark1 ark1900
 rename ark2 ark1910
@@ -11,28 +11,18 @@ rename ark1910 ark1900
 rename ark ark1910
 save ark_pairs2, replace
 
-global deeplearn "R:\JoePriceResearch\record_linking\projects\deep_learning"
-global ark1 "R:\JoePriceResearch\record_linking\projects\deep_learning\ark_pairs1"
-global ark2 "R:\JoePriceResearch\record_linking\projects\deep_learning\ark_pairs2"
-global cen1900 "R:\JoePriceResearch\record_linking\data\census_1900\census1900_raw\done\statafiles"
-global cen1910 "R:\JoePriceResearch\record_linking\data\census_1910\done\statafiles"
+global deeplearn "path/to/output_directory"
+global ark1 "path/to/arkpairs/ark_pairs1"
+global ark2 "path/to/arkpairs/ark_pairs2"
+global cen1900 "/path/to/1900_census_files"
+global cen1910 "/path/to/1910_census_files"
 
 *1900
-*grab some ohio
 cd $cen1900
-local dtas: dir . files "*.dta"
-local i = 1
-foreach dta of local dtas {
-use `dta', clear
-save sample/all`i'.dta, replace
-local i = `i' + 1
-}
-
-cd sample
 clear
-local twostate: dir . files "all*"
-foreach file of local twostate {
-append using `file'
+local dtas: dir . files "*.dta"
+foreach file of local dtas {
+    append using `file'
 }
 compress
 *check duplicates
@@ -51,20 +41,11 @@ gen byear1900 = regexs(1) if regexm(birth_year1900,"([0-9][0-9][0-9][0-9])")
 save all1900, replace
 
 *1910
-*grab some ohio
 cd $cen1910
-local dtas: dir . files "*.dta"
-local i = 1
-foreach dta of local dtas {
-use `dta', clear
-save sample/all`i'.dta, replace
-local i = `i' + 1
-}
-cd sample
 clear
-local all: dir . files "all*"
-foreach file of local all {
-append using `file'
+local dtas: dir . files "*.dta"
+foreach file of local dtas {
+    append using `file'
 }
 compress
 *check for duplicates
