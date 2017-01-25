@@ -54,5 +54,5 @@ for filename in files:
     os.remove(filenew)        
     count += 1
     complete = count / len(files)
-    print 'Files processed: %d'%(count/)"
-    print 'Percent complete: %.2f'%(complete)\n"
+    print 'Files processed: %d'%(count)"
+    print 'Percent complete: %.2f \n'%(complete)"
