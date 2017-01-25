@@ -6,14 +6,15 @@ Data: *.txt
 
 local filename = "`1'"
 
-cd "R:\JoePriceResearch\record_linking\data\census_1910\data"
+cd "path/to/data"
 set more off, perm
 insheet using `filename', clear delim($)
 
+*generate filename so we can know what gz archives are giving us problems
 gen filename = "`filename'"
+*drop first row
 drop if _n == 1
-gen arkid = regexs(0) if regexm(v1,"tenthttps.*ark.*1:1:[A-Z0-9]+-[A-Z0-9]+")
-replace arkid = substr(arkid,5,.)
+gen arkid = regexs(0) if regexm(v1,"tenthttps.*ark.*1:1:([A-Z0-9]+-[A-Z0-9]+)")
 drop v1
 foreach x of varlist _all{
 	gen temp = substr(`x',1,strpos(`x'," "))
